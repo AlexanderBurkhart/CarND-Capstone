@@ -1,9 +1,23 @@
 from styx_msgs.msg import TrafficLight
+import cv2
+import tensorflow as tf
+import numpy as np
 
 class TLClassifier(object):
     def __init__(self):
-        #TODO load classifier
-        pass
+        #TODO load classifieir
+	self.model = None
+	self.width = 0
+	self.height = 0
+	self.channels = 3
+
+    def setup_classifier(self, model, width, height, channels=3):
+	self.width = width
+	self.height = height
+	self.model = model
+	self.channels = channels
+
+	self.graph = tf.get_default_graph()
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
@@ -16,4 +30,14 @@ class TLClassifier(object):
 
         """
         #TODO implement light color prediction
+	resized = cv2.resize(image, (self.width, self.height))
+	resized = resized / 255
+	
+	with self.graph.as_default():
+		predictions = self.model.predict(resized.reshape((1, self.height, self.width, self.channels)))
+		color = predictions[0].tolist().index(np.max(predictions[0]))
+		tl = TrafficLight()
+		tl.state = color
+		return tl.state
+
         return TrafficLight.UNKNOWN
