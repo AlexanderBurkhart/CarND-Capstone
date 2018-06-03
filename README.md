@@ -15,9 +15,9 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
  
  I created two networks for this project: a detector network and a classifier network. The detector network detects the traffic lights while the classifer network detects the state of the traffic light detected by the detector network.
  
-Both of the programs for the models are stored in model_creator in the zip file in the corresponding detector and classifier folders. The saved models are stored in tl_detector/models in the zip file, which are named accordingly.
+Both of the programs for the models are stored in model_creator in the corresponding detector and classifier folders. The saved models are stored in tl_detector/models in the zip file, which are named accordingly.
 
-Models for the networks are state below:
+Models for the networks are stated below:
 
 ** Detector **
 UNet architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
