@@ -20,9 +20,11 @@ Both of the programs for the models are stored in model_creator in the correspon
 Models for the networks are stated below:
 
 **Detector**
+
 UNet architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
 
 **Classifier**
+
 InputLayer -> Conv2D -> MaxPooling2D -> Conv2D -> Flatten -> Dense -> Dense
 
 
