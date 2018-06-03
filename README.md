@@ -4,11 +4,11 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
 
 ## Waypoint Updater
 
--Used udacity's straight approach
+-Used Udacity's straight approach
 
 ## Twist Controller
 
--Used udacity's straight approach
+-Used Udacity's straight approach
 
 ## TL Detector
 ### Neural Networks
