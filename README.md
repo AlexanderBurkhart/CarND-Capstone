@@ -36,21 +36,34 @@ The data in the detector is comprised of an image with either a green, yellow, r
 
 The data in the classifier is comrpised of multiple images of a green, yellow, red, and no traffic light.
 
-** Examples of Data **
+#### Examples of Data
 
- Detector:
+ **Detector:**
  
  (carla)
  
+ ![green0](https://user-images.githubusercontent.com/357819/40889049-10adbd6e-672e-11e8-8dbe-5f9d3ffa0b98.jpg)
+ ![green0_mask](https://user-images.githubusercontent.com/357819/40889056-17367838-672e-11e8-9078-e7dc91abb79e.jpg)
+ 
  (simulator)
  
- Classifier:
+ ![red0](https://user-images.githubusercontent.com/357819/40889074-4c3c2726-672e-11e8-894b-f2a9dd1e8c29.jpg)
+ ![red0_mask](https://user-images.githubusercontent.com/357819/40889075-51705492-672e-11e8-9c30-01b6360747cf.jpg)
+ 
+**Classifier:**
  
  (carla)
  
+ ![green2](https://user-images.githubusercontent.com/357819/40889078-5dfcf828-672e-11e8-9dda-a6727a4b5c70.jpg)
+ ![red4](https://user-images.githubusercontent.com/357819/40889084-6809e4ac-672e-11e8-857e-efe9d1708e15.jpg)
+ ![yellow2](https://user-images.githubusercontent.com/357819/40889086-727c2daa-672e-11e8-8bd5-d89f916e7c4e.jpg)
+ 
  (simulator)
  
- 
+ ![green2_2](https://user-images.githubusercontent.com/357819/40889088-7f7fdf2e-672e-11e8-8621-738ba725afa7.jpg)
+ ![red10_1](https://user-images.githubusercontent.com/357819/40889089-8737a21a-672e-11e8-86d9-ecfedb1385bb.jpg)
+ ![yellow10_1](https://user-images.githubusercontent.com/357819/40889092-8d07cb66-672e-11e8-8b6b-9be6c13c3443.jpg)
+
  
  ## Behavior
  
@@ -58,11 +71,11 @@ The data in the classifier is comrpised of multiple images of a green, yellow, r
 
 (When vehicle is detecting traffic lights)
 
-![vehicle_detecting](https://www.dropbox.com/s/xo1vl0t06tah7n1/diagram2.PNG?dl=0)
+![diagram2](https://user-images.githubusercontent.com/357819/40889036-e66fd352-672d-11e8-9939-aa824952282b.PNG)
 
  (When vehicle stops detecting traffic lights)
 
-![vehicle_not_detecting](https://www.dropbox.com/s/zogoklki324xe0p/diagram1.PNG?dl=0)
+![diagram1](https://user-images.githubusercontent.com/357819/40889040-f06ee140-672d-11e8-9b23-e0743fd3958d.PNG)
 
 Also, I made the vehicle only detect traffic lights when it is going towards the traffic light to be more efficient. I did this by implementing a last distance variable to see if the vehicle is moving toward the traffic light or not by comparing it with the current distance.
 
