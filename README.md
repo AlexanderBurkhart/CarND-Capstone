@@ -1,74 +1,69 @@
+# CarND-Capstone Project
+
 This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
 
-Please use **one** of the two installation options, either native **or** docker installation.
+## Waypoint Updater
 
-### Native Installation
+-Used udacity's straight approach
 
-* Be sure that your workstation is running Ubuntu 16.04 Xenial Xerus or Ubuntu 14.04 Trusty Tahir. [Ubuntu downloads can be found here](https://www.ubuntu.com/download/desktop).
-* If using a Virtual Machine to install Ubuntu, use the following configuration as minimum:
-  * 2 CPU
-  * 2 GB system memory
-  * 25 GB of free hard drive space
+## Twist Controller
 
-  The Udacity provided virtual machine has ROS and Dataspeed DBW already installed, so you can skip the next two steps if you are using this.
+-Used udacity's straight approach
 
-* Follow these instructions to install ROS
-  * [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu) if you have Ubuntu 16.04.
-  * [ROS Indigo](http://wiki.ros.org/indigo/Installation/Ubuntu) if you have Ubuntu 14.04.
-* [Dataspeed DBW](https://bitbucket.org/DataspeedInc/dbw_mkz_ros)
-  * Use this option to install the SDK on a workstation that already has ROS installed: [One Line SDK Install (binary)](https://bitbucket.org/DataspeedInc/dbw_mkz_ros/src/81e63fcc335d7b64139d7482017d6a97b405e250/ROS_SETUP.md?fileviewer=file-view-default)
-* Download the [Udacity Simulator](https://github.com/udacity/CarND-Capstone/releases).
+## TL Detector
+### Neural Networks
+ 
+ I created two networks for this project: a detector network and a classifier network. The detector network detects the traffic lights while the classifer network detects the state of the traffic light detected by the detector network.
+ 
+Both of the programs for the models are stored in model_creator in the zip file in the corresponding detector and classifier folders. The saved models are stored in tl_detector/models in the zip file, which are named accordingly.
 
-### Docker Installation
-[Install Docker](https://docs.docker.com/engine/installation/)
+Models for the networks are state below:
 
-Build the docker container
-```bash
-docker build . -t capstone
-```
+** Detector **
+UNet architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
 
-Run the docker file
-```bash
-docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/ --rm -it capstone
-```
+** Classifier **
+InputLayer -> Conv2D -> MaxPooling2D -> Conv2D -> Flatten -> Dense -> Dense
 
-### Port Forwarding
-To set up port forwarding, please refer to the [instructions from term 2](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/16cf4a78-4fc7-49e1-8621-3450ca938b77)
 
-### Usage
+The detector is trained with 50 epochs with a batch size of 16 on the simulator and on Carla.
 
-1. Clone the project repository
-```bash
-git clone https://github.com/udacity/CarND-Capstone.git
-```
+The classifier is trained with 15 epochs and a batch size of 32 on the simulator. On Carla, the classifier uses the same epochs with a batch size of 64.
 
-2. Install python dependencies
-```bash
-cd CarND-Capstone
-pip install -r requirements.txt
-```
-3. Make and run styx
-```bash
-cd ros
-catkin_make
-source devel/setup.sh
-roslaunch launch/styx.launch
-```
-4. Run the simulator
+#### Data
 
-### Real world testing
-1. Download [training bag](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/traffic_light_bag_file.zip) that was recorded on the Udacity self-driving car.
-2. Unzip the file
-```bash
-unzip traffic_light_bag_file.zip
-```
-3. Play the bag file
-```bash
-rosbag play -l traffic_light_bag_file/traffic_light_training.bag
-```
-4. Launch your project in site mode
-```bash
-cd CarND-Capstone/ros
-roslaunch launch/site.launch
-```
-5. Confirm that traffic light detection works on real life images
+The data in the detector is comprised of an image with either a green, yellow, red, or no traffic light with the corresponding traffic light masks.
+
+The data in the classifier is comrpised of multiple images of a green, yellow, red, and no traffic light.
+
+** Examples of Data **
+
+ Detector:
+ 
+ (carla)
+ 
+ (simulator)
+ 
+ Classifier:
+ 
+ (carla)
+ 
+ (simulator)
+ 
+ 
+ 
+ ## Behavior
+ 
+ The vehicle has a set behavior when to identify traffic lights. When the car is at a distance of 40 away from a traffic light, it starts identifying traffic lights. It then stops identifying traffic lights at a distance of 20. It does this because in a real world situation, if the light was green at the beginning of the intersection (distance of around 40) and turned red in the middle of the intersection (distance of around 20) the vehicle would not stop. 
+
+(When vehicle is detecting traffic lights)
+
+![vehicle_detecting](https://www.dropbox.com/s/xo1vl0t06tah7n1/diagram2.PNG?dl=0)
+
+ (When vehicle stops detecting traffic lights)
+
+![vehicle_not_detecting](https://www.dropbox.com/s/zogoklki324xe0p/diagram1.PNG?dl=0)
+
+Also, I made the vehicle only detect traffic lights when it is going towards the traffic light to be more efficient. I did this by implementing a last distance variable to see if the vehicle is moving toward the traffic light or not by comparing it with the current distance.
+
+
